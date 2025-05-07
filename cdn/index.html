@@ -82,7 +82,7 @@
 
     async function loadFiles() {
       try {
-        const res = await fetch("/files/index.json");
+        const res = await fetch("../files/index.json");
         files = await res.json();
         renderList(files);
       } catch (err) {
