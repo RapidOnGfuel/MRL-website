@@ -3,7 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bio Site</title>
+  <title>Rapid</title>
+  <script>
+      // Array of titles to cycle through
+      const titles = ["Rapid", "MakeRapeLegal™"];
+      let currentTitleIndex = 0;
+
+      // Function to change the title
+      function changeTitle() {
+          document.title = titles[currentTitleIndex];
+          currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+      }
+
+      // Change title every 2 seconds
+      setInterval(changeTitle, 500);
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
