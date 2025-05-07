@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bio Site</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Background Video -->
+  <video id="bg-video" loop muted>
+    <source src="background.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Particles.js -->
+  <div id="particles-js"></div>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+
+  <!-- Click-to-Enter Overlay -->
+  <div id="click-to-enter">Click to Enter</div>
+
+  <!-- Main Content -->
+  <div class="content hidden">
+    <h1>Rapid</h1>
+    <p class="tagline">
+      <span id="typed-text"></span><span id="cursor">|</span>
+    </p>
+    <div class="buttons">
+      <button id="discord-button">Discord</button>
+      <button id="contact-button">Contact Me</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box">
+      <span id="close-modal">&times;</span>
+      <div id="modal-content">
+        <!-- Dynamic content for Discord or Contact Me -->
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <span class="copyright">Copyright © 2025 MakeRapeLegal™</span>
+    </footer>
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="hidden">
+    <div id="contact-box">
+      <span id="close-contact-modal">&times;</span>
+      <div class="modal-body">
+        <p id="email">EMAIL</p>
+        <p id="discord">DISCORD</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    // Particles
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 80 },
+        "size": { "value": 3 },
+        "move": { "speed": 2 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "opacity": 0.4
+        }
+      }
+    });
+
+    // Enter Screen
+    const video = document.getElementById('bg-video');
+    const enterOverlay = document.getElementById('click-to-enter');
+    const content = document.querySelector('.content');
+
+    document.body.addEventListener('click', () => {
+      enterOverlay.classList.add('hidden');
+      content.classList.remove('hidden');
+      video.muted = false;
+      video.play().catch(err => console.log('Playback failed:', err));
+    }, { once: true });
+
+    // Modal
+    const modal = document.getElementById('modal-overlay');
+    const closeModal = document.getElementById('close-modal');
+    const discordButton = document.getElementById('discord-button');
+    const contactButton = document.getElementById('contact-button');
+
+    discordButton.addEventListener('click', () => {
+      window.open('https://discord.gg/vr4Qgp4UUn', '_blank');
+    });
+
+    contactButton.addEventListener('click', () => {
+      document.getElementById('contact-modal').classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    // Copy to clipboard
+    document.getElementById('email').addEventListener('click', () => {
+      navigator.clipboard.writeText('main@makerapelegal.com')
+        .then(() => {
+          document.getElementById('email').innerText = 'Email copied to clipboard';
+        })
+        .catch(err => console.error('Error copying text: ', err));
+    });
+
+    document.getElementById('discord').addEventListener('click', () => {
+      navigator.clipboard.writeText('1337.rapid')
+        .then(() => {
+          document.getElementById('discord').innerText = 'Discord copied to clipboard';
+        })
+        .catch(err => console.error('Error copying text: ', err));
+    });
+
+    // Close contact modal
+    const closeContactModal = document.getElementById('close-contact-modal');
+    closeContactModal.addEventListener('click', () => {
+      document.getElementById('contact-modal').classList.add('hidden');
+    });
+
+    // Typewriter Effect
+    const typedText = document.getElementById("typed-text");
+    const cursor = document.getElementById("cursor");
+    const phrases = [
+      "d1 skid",
+      ":speaking_head:",
+      "JS connoisseur ",
+      "I love UI design",
+      "idk what else js click buttons"
+    ];
+    let phraseIndex = 0;
+    let letterIndex = 0;
+    let typing = true;
+
+    function typeLoop() {
+      const currentPhrase = phrases[phraseIndex];
+
+      if (typing) {
+        if (letterIndex < currentPhrase.length) {
+          typedText.textContent += currentPhrase.charAt(letterIndex);
+          letterIndex++;
+          setTimeout(typeLoop, 100);
+        } else {
+          typing = false;
+          setTimeout(typeLoop, 1500);
+        }
+      } else {
+        if (letterIndex > 0) {
+          typedText.textContent = currentPhrase.substring(0, letterIndex - 1);
+          letterIndex--;
+          setTimeout(typeLoop, 50);
+        } else {
+          typing = true;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeLoop, 500);
+        }
+      }
+    }
+
+    typeLoop();
+  </script>
+</body>
+</html>
+
